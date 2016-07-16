@@ -2,7 +2,7 @@ package galfred
 
 import (
 	"testing"
-    "fmt"
+	"fmt"
 )
 
 type testdata struct {
@@ -61,7 +61,6 @@ func TestNewTemplate(t *testing.T) {
 	t.Log("Test jon marshaling")
 	{
 		json := template.toJson()
-        fmt.Println(json)
 		if "" == json {
 			t.Fatal("Creating json failed.")
 		}

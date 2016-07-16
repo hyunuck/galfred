@@ -5,23 +5,6 @@ import (
 	"fmt"
 )
 
-/*
-{"items": [
-    {
-        "uid": "desktop",
-        "type": "file",
-        "title": "Desktop",
-        "subtitle": "~/Desktop",
-        "arg": "~/Desktop",
-        "autocomplete": "Desktop",
-        "icon": {
-            "type": "fileicon",
-            "path": "~/Desktop"
-        }
-    }
-]}
-*/
-
 type Icon struct {
 	Type string `json:"type"`
 	Path string `json:"path"`
@@ -35,7 +18,7 @@ type Text struct {
 type Mod struct {
 	valid    string `json:"valid"`
 	arg      string `json:"arg"`
-	subtitle string `json:subtitle`
+	subtitle string `json:"subtitle"`
 }
 
 type Item struct {
@@ -63,8 +46,8 @@ func (a *AlfredTemplate) appendItem(item *Item) []Item {
 
 func (a *AlfredTemplate) append(title string, subtitle string, arg string, autoComplete string, iconType string, iconPath string) []Item {
 	item := Item{
-		Uid:          "test_uid",
-		Type:         "test_type",
+		Uid:          "",
+		Type:         "",
 		Title:        title,
 		Subtitle:     subtitle,
 		Arg:          arg,
