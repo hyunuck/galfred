@@ -39,12 +39,12 @@ type AlfredTemplate struct {
 	Items []Item `json:"items"`
 }
 
-func (a *AlfredTemplate) appendItem(item *Item) []Item {
+func (a *AlfredTemplate) AppendItem(item *Item) []Item {
 	a.Items = append(a.Items, *item)
 	return a.Items
 }
 
-func (a *AlfredTemplate) append(title string, subtitle string, arg string, autoComplete string, iconType string, iconPath string) []Item {
+func (a *AlfredTemplate) Append(title string, subtitle string, arg string, autoComplete string, iconType string, iconPath string) []Item {
 	item := Item{
 		Uid:          "",
 		Type:         "",

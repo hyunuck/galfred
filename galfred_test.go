@@ -2,7 +2,6 @@ package galfred
 
 import (
 	"testing"
-	"fmt"
 )
 
 type testdata struct {
@@ -38,7 +37,7 @@ func TestNewTemplate(t *testing.T) {
 	}
 
 	for _, v := range td {
-		template.append(v.title, v.subtitle, v.arg, v.autoComplete, v.iconType, v.iconPath)
+		template.Append(v.title, v.subtitle, v.arg, v.autoComplete, v.iconType, v.iconPath)
 	}
 
 	t.Log("Test containing correct data.")
