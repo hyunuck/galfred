@@ -59,7 +59,7 @@ func TestNewTemplate(t *testing.T) {
 
 	t.Log("Test jon marshaling")
 	{
-		json := template.toJson()
+		json := template.ToJson()
 		if "" == json {
 			t.Fatal("Creating json failed.")
 		}
