@@ -2,7 +2,9 @@ package galfred
 
 import (
 	"encoding/json"
+	"crypto/rand"
 	"fmt"
+	"io"
 )
 
 type Icon struct {
@@ -45,8 +47,14 @@ func (a *AlfredTemplate) AppendItem(item *Item) []Item {
 }
 
 func (a *AlfredTemplate) Append(title string, subtitle string, arg string, autoComplete string, iconType string, iconPath string) []Item {
+
+	uuid, err := newUUID()
+	if err != nil {
+		fmt.Printf("error: %v\n", err)
+	}
+
 	item := Item{
-		Uid:          "",
+		Uid:          uuid,
 		Type:         "",
 		Title:        title,
 		Subtitle:     subtitle,
@@ -61,16 +69,47 @@ func (a *AlfredTemplate) Append(title string, subtitle string, arg string, autoC
 	return a.Items
 }
 
+func (a *AlfredTemplate) AppendTitle(title string, arg string) []Item {
+
+	uuid, err := newUUID()
+	if err != nil {
+		fmt.Printf("error: %v\n", err)
+	}
+
+	item := Item{
+		Uid:          uuid,
+		Title:        title,
+		Arg:          arg,
+	}
+	a.Items = append(a.Items, item)
+	return a.Items
+}
+
 func NewTemplate() *AlfredTemplate {
 	a := &AlfredTemplate{}
 	return a
 }
 
-func (a *AlfredTemplate) toJson() string {
+func (a *AlfredTemplate) ToJson() string {
 	json, err := json.Marshal(a)
 	if err != nil {
 		fmt.Println(err)
 		return ""
 	}
 	return string(json)
+}
+
+
+// newUUID generates a random UUID according to RFC 4122
+func newUUID() (string, error) {
+	uuid := make([]byte, 16)
+	n, err := io.ReadFull(rand.Reader, uuid)
+	if n != len(uuid) || err != nil {
+		return "", err
+	}
+	// variant bits; see section 4.1.1
+	uuid[8] = uuid[8]&^0xc0 | 0x80
+	// version 4 (pseudo-random); see section 4.1.3
+	uuid[6] = uuid[6]&^0xf0 | 0x40
+	return fmt.Sprintf("%x-%x-%x-%x-%x", uuid[0:4], uuid[4:6], uuid[6:8], uuid[8:10], uuid[10:]), nil
 }
